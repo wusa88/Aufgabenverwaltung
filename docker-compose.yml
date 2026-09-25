@@ -1,0 +1,28 @@
+services:
+  aufgaben:
+    build: .
+    image: aufgaben:latest
+    # Bei jedem Deploy neu bauen. Ohne das nimmt Portainer beim
+    # "Pull and redeploy" das alte Image, und Code-Änderungen kommen nicht an.
+    pull_policy: build
+    container_name: aufgaben
+    restart: unless-stopped
+    environment:
+      # Die Werte kommen aus den "Environment variables" des Stacks (Portainer)
+      # oder aus einer .env neben dieser Datei (docker compose). Die .env selbst
+      # gehört nicht ins Repository.
+      APP_PASSWORD: "${APP_PASSWORD:?APP_PASSWORD fehlt - in Portainer unter Environment variables oder in der .env setzen}"
+      API_TOKEN: "${API_TOKEN:-}"
+      SECRET_KEY: "${SECRET_KEY:-}"
+      TZ: "${TZ:-Europe/Berlin}"
+    ports:
+      - "${APP_PORT:-8092}:8080"
+    volumes:
+      - daten:/data
+
+volumes:
+  # Benanntes Volume statt ./data: Portainer löst relative Pfade im eigenen
+  # Container auf, nicht auf dem Host. Der feste Name sorgt dafür, dass die
+  # Daten auch ein Löschen und Neuanlegen des Stacks überleben.
+  daten:
+    name: aufgaben-daten

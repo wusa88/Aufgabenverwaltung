@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Aufgaben</title>
+<meta name="description" content="Schnell aufschreiben, nichts vergessen.">
+<meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121419" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Aufgaben">
+<link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
+<link rel="icon" href="icons/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="app.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div id="app">
+  <header class="bar">
+    <button class="icon only-sub" id="btn-back" type="button" aria-label="Zurück">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <h1 class="title" id="title">Aufgaben</h1>
+    <span class="status" id="status" hidden></span>
+    <form class="searchbox" id="searchform" role="search">
+      <input id="q" type="search" placeholder="In allen Aufgaben suchen …" enterkeyhint="search" autocomplete="off" aria-label="Suche">
+    </form>
+    <button class="icon only-main" id="btn-search" type="button" aria-label="Suchen">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+    </button>
+    <button class="icon only-main" id="btn-settings" type="button" aria-label="Kategorien und Einstellungen">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
+    </button>
+  </header>
+
+  <section id="capture">
+    <form id="add" autocomplete="off">
+      <textarea id="txt" rows="1" placeholder="Was ist zu tun?" enterkeyhint="send" autocapitalize="sentences" aria-label="Neue Aufgabe"></textarea>
+      <button id="send" type="submit" aria-label="Speichern" disabled>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+      </button>
+    </form>
+    <div class="chips" id="chips"></div>
+    <div class="subbar">
+      <div class="seg" id="seg" role="tablist">
+        <button type="button" data-v="open" role="tab">Offen</button>
+        <button type="button" data-v="done" role="tab">Erledigt</button>
+      </div>
+      <p class="hint" id="hint"></p>
+    </div>
+  </section>
+
+  <main id="list" aria-live="polite"></main>
+  <section id="settings"></section>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<dialog id="sheet" class="sheet" aria-labelledby="sheet-title">
+  <form id="sheetform" autocomplete="off">
+    <h2 id="sheet-title" tabindex="-1" autofocus>Aufgabe</h2>
+    <textarea id="etext" rows="2" aria-label="Text"></textarea>
+    <div class="chips small" id="ecats"></div>
+    <label class="toggle"><input type="checkbox" id="estar"><span>Wichtig – steht oben</span></label>
+    <p class="meta" id="emeta"></p>
+    <div class="actions">
+      <button type="button" class="btn danger" id="edel">Löschen</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="ereopen" hidden>Wieder öffnen</button>
+      <button type="submit" class="btn primary" id="esave">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="catdlg" class="sheet" aria-labelledby="catdlg-title">
+  <form id="catform" autocomplete="off">
+    <h2 id="catdlg-title">Neue Kategorie</h2>
+    <p class="meta" id="catdlg-note"></p>
+    <input id="catname" type="text" maxlength="40" placeholder="z. B. Schule Nord, Projekt X, Privat" enterkeyhint="done" aria-label="Name">
+    <div class="palette" id="catpal"></div>
+    <div class="actions">
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="catcancel">Abbrechen</button>
+      <button type="submit" class="btn primary">Anlegen</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="login" hidden>
+  <form id="loginform" class="logincard">
+    <img src="icons/icon-192.png" alt="" width="72" height="72">
+    <h1>Aufgaben</h1>
+    <input type="text" name="username" autocomplete="username" value="aufgaben" hidden>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="Passwort" aria-label="Passwort" required>
+    <button class="btn primary" type="submit">Anmelden</button>
+    <p class="err" id="loginerr"></p>
+  </form>
+</div>
+</body>
+</html>
