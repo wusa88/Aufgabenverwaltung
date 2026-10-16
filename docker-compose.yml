@@ -26,5 +26,3 @@ volumes:
   # Daten auch ein Löschen und Neuanlegen des Stacks überleben.
   daten:
     name: aufgaben-daten
-
-#das ist ein test
